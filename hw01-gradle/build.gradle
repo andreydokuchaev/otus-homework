@@ -1,0 +1,21 @@
+dependencies {
+    implementation 'com.google.guava:guava'
+}
+
+application {
+    mainClass = 'hw01.gradle.HelloOtus'
+}
+
+task customFatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'hw01.gradle.HelloOtus'
+    }
+    archiveBaseName = 'fatJar'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    with jar
+}

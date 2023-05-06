@@ -13,4 +13,4 @@ plugins {
 }
 
 rootProject.name = 'otus-homework'
-include('app')
+include('app', 'hw01-gradle')
