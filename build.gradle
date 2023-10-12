@@ -18,6 +18,8 @@ allprojects {
         dependencies {
             dependency 'com.google.guava:guava:31.1-jre'
             dependency 'org.junit.jupiter:junit-jupiter:5.9.1'
+            dependency 'org.ow2.asm:asm:9.5'
+            dependency 'org.ow2.asm:asm-util:9.5'
         }
     }
 }
