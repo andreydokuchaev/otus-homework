@@ -2,3 +2,19 @@ dependencies {
     implementation 'org.ow2.asm:asm'
     implementation 'org.ow2.asm:asm-util'
 }
+
+task agentJar(type: Jar, dependsOn: compileJava) {
+    manifest {
+        attributes "Premain-Class": "hw07.asm.instrumentation.CustomAgent"
+    }
+    archiveBaseName = 'agent'
+    destinationDirectory = projectDir
+    from sourceSets.main.output
+    include 'hw07/asm/instrumentation/*.class'
+}
+
+task runWithAgent(type: JavaExec, dependsOn: agentJar) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'hw07.asm.Main'
+    jvmArgs = ['"-javaagent:agent.jar"']
+}
