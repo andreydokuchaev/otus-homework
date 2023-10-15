@@ -6,6 +6,7 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 
+import java.io.FileOutputStream;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
@@ -21,6 +22,11 @@ public class CustomAgent {
                 ClassVisitor cv = new CustomClassVisitor(Opcodes.ASM9, cw);
 
                 cr.accept(cv, 0);
+                try {
+                    var fos = new FileOutputStream("TestLogging.class");
+                    fos.write(cw.toByteArray());
+                }
+                catch (Exception ex) {}
 
                 return cw.toByteArray();
             }

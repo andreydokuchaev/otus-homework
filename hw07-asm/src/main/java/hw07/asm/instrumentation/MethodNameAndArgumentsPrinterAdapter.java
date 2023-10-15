@@ -44,8 +44,23 @@ class MethodNameAndArgumentsPrinterAdapter extends MethodVisitor {
 
             var arguments = Type.getArgumentTypes(descriptor);
             for (var i = 0; i < arguments.length; i++) {
+
                 super.visitVarInsn(arguments[i].getOpcode(Opcodes.ILOAD), i + 1);
-                dynamicDescriptor.append(arguments[i].getDescriptor());
+
+                if (arguments[i].getDescriptor().charAt(0) == '[') {
+                    super.visitMethodInsn(
+                            Opcodes.INVOKESTATIC,
+                            "java/util/Arrays",
+                            "toString",
+                            "(" + arguments[i].getDescriptor() + ")Ljava/lang/String;",
+                            false);
+
+                    dynamicDescriptor.append("Ljava/lang/String;");
+                }
+                else {
+                    dynamicDescriptor.append(arguments[i].getDescriptor());
+                }
+
                 if (bootstrapMethodArguments.length() != 0) {
                     bootstrapMethodArguments.append(", ");
                 }
@@ -79,6 +94,6 @@ class MethodNameAndArgumentsPrinterAdapter extends MethodVisitor {
 
     @Override
     public void visitMaxs(int maxStack, int maxLocals) {
-        super.visitMaxs(maxStack, maxLocals);
+        mv.visitMaxs(-1, -1);
     }
 }

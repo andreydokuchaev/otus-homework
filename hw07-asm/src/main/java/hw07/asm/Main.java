@@ -9,6 +9,7 @@ import org.objectweb.asm.Opcodes;
 
 import java.io.FileOutputStream;
 
+//run with gradle task runWithAgent
 public class Main {
 
     public static void main(String[] args) throws Exception {
