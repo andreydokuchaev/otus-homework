@@ -24,6 +24,13 @@ public class Box<T extends Fruit> {
     }
 
     public void transfer(Box<? super T> destinationBox) {
+        if (destinationBox == null) {
+            throw new IllegalArgumentException("Destination box must not be null");
+        }
+        if (destinationBox == this) {
+            throw new IllegalArgumentException("Destination box must be different from current box");
+        }
+
         for (Iterator<T> i = fruits.iterator(); i.hasNext();) {
             destinationBox.add(i.next());
             i.remove();
