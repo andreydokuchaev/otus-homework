@@ -22,11 +22,6 @@ public class CustomAgent {
                 ClassVisitor cv = new CustomClassVisitor(Opcodes.ASM9, cw);
 
                 cr.accept(cv, 0);
-                try {
-                    var fos = new FileOutputStream("TestLogging.class");
-                    fos.write(cw.toByteArray());
-                }
-                catch (Exception ex) {}
 
                 return cw.toByteArray();
             }
